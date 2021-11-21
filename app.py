@@ -20,8 +20,8 @@ def creation(bd,req):
    
     c.close()
 def ajoute(bd,job):
-    req = ''' INSERT INTO job(title,lieu,date_time,description,domain,Fonction,Contrat,Entreprise,Salaire,Niveau_etude,Annonceur)
-              VALUES(?,?,?,?,?,?,?,?,?,?,?) '''
+    req = ''' INSERT INTO job(title,lieu,date_time,description,domain,Fonction,Contrat,Entreprise,Salaire,Niveau_etude,Annonceur,url)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?) '''
     c = connect(bd)
     cur = c.cursor()
     res = cur.execute(req,job)
@@ -43,7 +43,7 @@ def collect():
             ,Entreprise str
             ,Salaire str
             ,Niveau_etude str
-            ,Annonceur str)''')
+            ,Annonceur str,url str)''')
     except:
         pass
     v = []
@@ -82,7 +82,7 @@ def collect():
             Niveau_etude = soup.find('ul',class_='extraQuestionName').find_all('li')[5].find('a').text
             Annonceur = soup.find('div',class_='infoannonce').find('dd').text
 
-            job = (title,lieu,date_time,description,domain,Fonction,Contrat,Entreprise,Salaire,Niveau_etude,Annonceur)
+            job = (title,lieu,date_time,description,domain,Fonction,Contrat,Entreprise,Salaire,Niveau_etude,Annonceur,url)
             ajoute('bd.sqlite',job)
         
 
@@ -119,7 +119,8 @@ def afficher(bd,req):
                 'Entreprise': ligne[7],
                 'Salaire': ligne[8],
                 'Niveau_etude': ligne[9],
-                'Annonceur': ligne[10]
+                'Annonceur': ligne[10],
+                'url':ligne[11]
             }
         allAPI.append(api)
     c.close()
