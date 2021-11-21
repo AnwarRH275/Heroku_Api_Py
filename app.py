@@ -4,12 +4,12 @@ import os
 from bs4 import BeautifulSoup
 import requests
 from fake_useragent import UserAgent
-from sqlite3 import *
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 ua = UserAgent()
-from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask
+
+
 
 
 
@@ -135,7 +135,7 @@ def GetApi():
 
 if __name__ == "__main__":
     app.config['JSON_AS_ASCII'] = False
-    
-    app.run(debug=True,port=8110)
+    port = os.environ.get("PORT",5000)
+    app.run(debug=True,host="0.0.0.0",port=port)
 
     
